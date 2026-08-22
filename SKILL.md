@@ -271,4 +271,6 @@ Luna 回报后，Sol 必须独立检查实际 diff、文件范围、测试命令
 - 展示关键 diff；不覆盖无关用户配置。
 - 验证失败时给出可执行修复，不要假装成功。
 - 用户若要求「只配置 Sol 和 Luna」：不要启用 Terra 作为默认，catalog 里可保留 Terra 条目仅用于兼容。
+- Windows 桌面版使用原生 PowerShell 或明确选择 WSL；不要混用两个环境的项目路径、`CODEX_HOME` 和 `config.toml`。
+- 桌面版安装、账号登录、项目信任和 Codex CLI 安装属于前置环境；本技能只负责项目级配置、角色协议、catalog 修复和验证。
 ---

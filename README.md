@@ -167,6 +167,64 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate-role-defi
 
 官方参考：[Config basics](https://learn.chatgpt.com/docs/config-file/config-basic)、[Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)、[AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md)、[Windows desktop app](https://learn.chatgpt.com/docs/windows/windows-app)。
 
+### 完整安装顺序
+
+1. 从官方 Windows 桌面版入口安装并启动 ChatGPT/Codex 应用，登录拥有 Codex 权限的账号，并重启一次应用完成更新。
+2. 安装 Git、Node.js 20+ 和 npm。Git Bash 适合直接运行本仓库的 `.sh` 脚本；原生 PowerShell 适合运行 `.ps1` 校验脚本。
+3. 在 PowerShell 中检查环境：
+
+   ```powershell
+   git --version
+   node --version
+   npm --version
+   codex --version
+   ```
+
+4. 设置网关所需的环境变量。当前 PowerShell 会话临时设置：
+
+   ```powershell
+   $env:OPENAI_API_KEY = "在本机安全注入的值"
+   ```
+
+   不要把这条命令写进 README、`config.toml`、Git 历史或任务回报。若使用账号登录而不是 API 网关，则按账号可用模型配置，不要凭空添加不存在的模型名。
+5. 在 Codex 桌面版添加或打开项目，确认项目根目录正确，并在受信任状态下运行项目级配置。
+6. 安装技能并运行 bootstrap；bootstrap 只负责项目文件，不负责安装桌面应用、创建账号或生成密钥。
+7. 关闭并重新打开项目任务，再执行单模型和多代理验证。
+
+### 原生 Windows 与 WSL 的选择
+
+选择一种运行模式并保持路径一致：
+
+- 原生 Windows：桌面版使用 PowerShell；项目路径使用 `C:\...`，运行校验脚本使用 `.ps1`。
+- WSL：在 WSL 中安装 Git、Node、Codex CLI 和依赖；项目使用 `/mnt/c/...` 或 WSL 内路径，`.sh` 脚本和 Codex CLI 都在 WSL 中运行。
+
+不要在同一个任务中混用 Windows 路径、WSL 路径和两个环境各自的 `~/.codex`。若桌面版使用原生 Windows，优先把配置放在 Windows 用户目录；若 Codex CLI 在 WSL 中运行，使用 WSL 用户目录下的 `~/.codex/config.toml`。
+
+### 桌面版日常使用配方
+
+在新任务中先给 Sol 目标、约束和验收标准，例如：
+
+```text
+先读取 AGENTS.md，先由 luna_scout 只读盘点相关文件，再由 luna_worker 在指定范围内实施，最后由 luna_tester 验证。每个阶段通过后再解锁下一阶段。不要修改范围外文件，不要提交。
+```
+
+适合交给 Luna 的工作：文件定位、依赖盘点、边界清晰的实现、批量机械修改、测试和反向审查。Sol 应继续负责需求澄清、架构取舍、共享接口冲突、权限决定和最终验收。
+
+在桌面版中检查子任务结果时，至少确认：Luna 使用了正确模型、没有越过任务卡范围、测试命令有退出结果、日志没有未收口错误、工作区 diff 符合预期。子代理会增加 token 和延迟，不要把所有小问题都拆成子任务。
+
+### 常见故障排查
+
+| 现象 | 优先检查 |
+|---|---|
+| 桌面版看不到项目规则 | 项目是否受信任；`AGENTS.md` 是否位于 Git 根目录；当前任务是否重新启动 |
+| 桌面版不读取项目 `.codex` | 检查 `.codex/config.toml` 路径、项目信任状态和当前运行环境的用户目录 |
+| `codex` 不是命令 | 安装 Codex CLI，或确认桌面版使用的运行环境与 CLI 所在环境一致 |
+| `npx skills` 失败 | 检查 Node/npm、网络和技能安装目录；确认安装的是 `sdhack/sol-luna-setup` |
+| `Unknown model gpt-5.6-luna` | 运行 catalog 脚本；检查 `model_catalog_json` 绝对路径和 `multi_agent_v2 = false`；重新启动任务 |
+| `wire_api` 或 `/v1/responses` 错误 | 网关是否真的实现 Responses API；不要把 Chat Completions 端点伪装成 Responses |
+| Luna 修改了不该改的文件 | 立即停止后续阶段，检查 sandbox/审批和任务卡；`AGENTS.md` 的角色文字不是强制隔离 |
+| 配置修改后行为没变化 | 关闭并重新打开项目任务；确认没有更近目录的 `AGENTS.override.md` 或 `.codex/config.toml` 覆盖它 |
+
 ### 配置环境变量
 
 只配置环境变量名，不把真实值写入配置文件：
