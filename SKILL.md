@@ -34,7 +34,7 @@ description: |
 
 ## 前置
 
-- Linux / macOS，Node.js 20+
+- Linux / macOS，或 Windows + WSL/Git Bash；Node.js 20+
 - 可访问的 OpenAI-compatible **Responses** 端点（`wire_api = "responses"`）
 - 账号侧启用 `gpt-5.6-sol` 与 `gpt-5.6-luna`
 
@@ -79,8 +79,6 @@ pi install npm:@kky42/pi-flow   # 可选，需已装 pi
 
 ```bash
 bash ~/.agents/skills/sol-luna-setup/scripts/bootstrap.sh "$(pwd)"
-# 或安装 skill 后:
-# bash ~/.claude/skills/sol-luna-setup/scripts/bootstrap.sh "$(pwd)"
 ```
 
 会创建/更新：

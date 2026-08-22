@@ -108,7 +108,7 @@ env_key = "OPENAI_API_KEY"
 在项目根执行：
 
 ```powershell
-bash .\scripts\bootstrap.sh (Get-Location).Path
+bash ./scripts/bootstrap.sh "$(Get-Location)"
 ```
 
 如果 Windows 环境没有 Bash，可在 WSL 中执行脚手架，并使用 WSL 项目路径打开仓库。脚手架会保留已有配置，不覆盖无关文件。
@@ -126,7 +126,7 @@ Unknown model `gpt-5.6-luna` for spawn_agent
 在项目根执行：
 
 ```powershell
-bash .\scripts\prepare-luna-catalog.sh (Join-Path (Get-Location) '.codex/models-v1.json')
+bash ./scripts/prepare-luna-catalog.sh "$(Join-Path (Get-Location) '.codex/models-v1.json')"
 ```
 
 然后确认项目 `.codex\config.toml` 使用生成 catalog 的绝对路径，并保持：
