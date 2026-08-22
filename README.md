@@ -57,6 +57,116 @@ bash ~/.agents/skills/sol-luna-setup/scripts/bootstrap.sh "$(pwd)"
 
 已有文件默认保留，不盲目覆盖。
 
+## Codex 桌面版配方（Windows）
+
+Codex 桌面版与 CLI/IDE 共用配置层。最稳妥的配方是：把个人默认放在 `%USERPROFILE%\.codex\config.toml`，把团队协作规则放在项目根目录的 `AGENTS.md`，把项目级 Agent 配置放在项目的 `.codex\agents\`。
+
+### 1. 打开项目
+
+在 Codex 桌面版中打开已经初始化的项目目录。项目最好是 Git 仓库根目录，并确认项目被标记为可信；不受信任的项目可能跳过项目级 `.codex\` 配置、hooks 和规则。
+
+### 2. 安装技能
+
+PowerShell：
+
+```powershell
+npx skills add Yuri-NagaSaki/subagent-skills -g -y
+```
+
+若使用本仓库的本地版本，确保技能目录位于：
+
+```text
+$env:USERPROFILE\.agents\skills\sol-luna-setup
+```
+
+### 3. 写入个人默认配置
+
+在 Codex 桌面版打开设置，选择 `Codex Settings > Open config.toml`，或直接编辑：
+
+```text
+$env:USERPROFILE\.codex\config.toml
+```
+
+只写模型名、端点和环境变量名，不写真实密钥。示例：
+
+```toml
+model = "gpt-5.6-sol"
+default_subagent_model = "gpt-5.6-luna"
+
+[features]
+multi_agent = true
+multi_agent_v2 = false
+
+[model_providers.gateway]
+base_url = "https://your-openai-compatible-endpoint/v1"
+wire_api = "responses"
+env_key = "OPENAI_API_KEY"
+```
+
+### 4. 写入项目配置
+
+在项目根执行：
+
+```powershell
+bash .\scripts\bootstrap.sh (Get-Location).Path
+```
+
+如果 Windows 环境没有 Bash，可在 WSL 中执行脚手架，并使用 WSL 项目路径打开仓库。脚手架会保留已有配置，不覆盖无关文件。
+
+桌面版启动新任务后，Codex 会自动读取项目根及当前目录链上的 `AGENTS.md`。本仓库模板会要求 Sol 把边界清晰的探索、实现、测试和审查工作交给 Luna，并要求 Sol 对实际 diff 和测试证据做最终验收。
+
+### 5. 修复 Luna 无法 spawn
+
+如果桌面版报：
+
+```text
+Unknown model `gpt-5.6-luna` for spawn_agent
+```
+
+在项目根执行：
+
+```powershell
+bash .\scripts\prepare-luna-catalog.sh (Join-Path (Get-Location) '.codex/models-v1.json')
+```
+
+然后确认项目 `.codex\config.toml` 使用生成 catalog 的绝对路径，并保持：
+
+```toml
+model_catalog_json = "C:/absolute/path/to/project/.codex/models-v1.json"
+
+[features]
+multi_agent = true
+multi_agent_v2 = false
+```
+
+不要把 `.codex\models-v1.json` 提交到 Git；它已被 `.gitignore` 排除。catalog 生成失败时不得把 Luna spawn 当作已验证。
+
+### 6. Windows 本地验证
+
+在项目目录运行：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate-setup.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate-role-definitions.ps1
+```
+
+然后在 Codex 桌面版新任务中使用一个只读请求验证委派：
+
+```text
+按 AGENTS.md 先派 luna_scout，只读盘点仓库结构；不要修改文件；回报以 SCOUT_DONE 开头。
+```
+
+只有同时看到 Luna 子任务、`SCOUT_DONE`、无越界 diff 和无错误日志，才算多代理配置通过。单纯看到配置文件存在不算验证成功。
+
+### 7. 重要边界
+
+- `AGENTS.md` 是行为协议，不是操作系统权限隔离。
+- `read-only`、`workspace-write` 等角色边界必须结合 Codex sandbox 和审批设置验证。
+- 桌面版当前版本通常已默认启用子代理；显式配置 `multi_agent` 是为了兼容和排查，不代表所有网关都支持 Luna。
+- 子代理会增加总 token 和延迟；只有任务可拆解且有独立验收时才值得委派。
+
+官方参考：[Config basics](https://learn.chatgpt.com/docs/config-file/config-basic)、[Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)、[AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md)、[Windows desktop app](https://learn.chatgpt.com/docs/windows/windows-app)。
+
 ### 配置环境变量
 
 只配置环境变量名，不把真实值写入配置文件：
