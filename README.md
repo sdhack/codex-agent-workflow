@@ -37,7 +37,7 @@ Sol
 ### 安装技能
 
 ```bash
-npx skills add Yuri-NagaSaki/subagent-skills -g -y
+npx skills add sdhack/sol-luna-setup -g -y
 ```
 
 ### 初始化项目
@@ -70,7 +70,7 @@ Codex 桌面版与 CLI/IDE 共用配置层。最稳妥的配方是：把个人�
 PowerShell：
 
 ```powershell
-npx skills add Yuri-NagaSaki/subagent-skills -g -y
+npx skills add sdhack/sol-luna-setup -g -y
 ```
 
 若使用本仓库的本地版本，确保技能目录位于：
@@ -239,7 +239,7 @@ scripts/validate-role-definitions.ps1
 - [Anthropic: Building effective agents](https://www.anthropic.com/research/building-effective-agents)
 - [LangGraph: Workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents)
 - [OpenAI: A practical guide to building agents](https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf)
-- [原始 Sol/Luna 实践仓库](https://github.com/Yuri-NagaSaki/subagent-skills)
+- [本项目仓库](https://github.com/sdhack/sol-luna-setup)
 
 ## License
 

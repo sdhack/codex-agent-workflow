@@ -12,8 +12,8 @@ description: |
 
 # Sol + Luna 分层子代理 Setup Skill
 
-> Install: `npx skills add Yuri-NagaSaki/subagent-skills -g -y`  
-> Repo: https://github.com/Yuri-NagaSaki/subagent-skills  
+> Install: `npx skills add sdhack/sol-luna-setup -g -y`  
+> Repo: https://github.com/sdhack/sol-luna-setup  
 > Guide: https://catcat.blog/2026/08/sol-luna-layered-subagents-codex-claude-pi.html
 
 ## 目标
@@ -78,7 +78,7 @@ pi install npm:@kky42/pi-flow   # 可选，需已装 pi
 在项目根运行：
 
 ```bash
-bash /path/to/subagent-skills/scripts/bootstrap.sh "$(pwd)"
+bash ~/.agents/skills/sol-luna-setup/scripts/bootstrap.sh "$(pwd)"
 # 或安装 skill 后:
 # bash ~/.claude/skills/sol-luna-setup/scripts/bootstrap.sh "$(pwd)"
 ```
@@ -265,7 +265,7 @@ Luna 回报后，Sol 必须独立检查实际 diff、文件范围、测试命令
 - `references/reporting-contract.md` — Luna 回报字段与状态语义
 - `references/cost-quality-metrics.md` — 上下文、成本、质量和返工指标
 - 博客长文：https://catcat.blog/2026/08/sol-luna-layered-subagents-codex-claude-pi.html
-- 源仓库：https://github.com/Yuri-NagaSaki/subagent-skills
+- 当前仓库：https://github.com/sdhack/sol-luna-setup
 
 ## Agent 行为准则
 
