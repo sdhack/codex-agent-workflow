@@ -6,9 +6,9 @@ Use this protocol to route a bounded engineering task between one Sol lead and L
 
 ## Default route
 
-Sol owns requirements, architecture, tradeoffs, user authorization, integration, independent acceptance, commit, PR, and release. Sol should delegate bounded execution to one Luna when the task spans multiple files, is likely to take more than two minutes, is repetitive, needs an independent test, or has a clear file boundary.
+Sol owns requirements, architecture, tradeoffs, user authorization, integration, independent acceptance, commit, PR, and release. Any low-risk, clearly bounded, mechanical task that needs no architecture judgment or user authorization and can be executed and checked directly is routed to one `luna_worker` by default, even when it is a one-file change or takes less than two minutes. This includes simple CRUD, formatting, field edits, template application, repetitive renaming, explicit configuration changes, and local fixes under an existing design.
 
-Sol may handle a one-line read-only check, a tiny unambiguous edit, a simple status query, or a pure explanation directly. Delegation never transfers final responsibility.
+Outside that rule, Sol should also delegate bounded execution to one Luna when the task spans multiple files, is likely to take more than two minutes, is repetitive, needs an independent test, or has a clear file boundary. Sol may handle a one-line read-only check, a simple status query, or a pure explanation directly. A tiny edit is not a Sol exception merely because it is small if it is otherwise a low-risk mechanical task. Delegation never transfers final responsibility.
 
 ## Matrix
 
@@ -41,4 +41,3 @@ For a failed stage, send the same Luna a minimal repair card no more than twice.
 ## Context rule
 
 Send only current-stage inputs and constraints. Prefer targeted search, line references, structured summaries, and bounded logs. Do not repeat full history or large files. End the Luna task after its report.
-
