@@ -1,0 +1,28 @@
+# Project-level: Sol leads, Luna executes
+# Secrets: only set OPENAI_API_KEY in the environment.
+# If spawn_agent rejects gpt-5.6-luna, run:
+#   bash scripts/prepare-luna-catalog.sh "$(pwd)/.codex/models-v1.json"
+# then set model_catalog_json to that absolute path and multi_agent_v2=false.
+
+model = "gpt-5.6-sol"
+model_provider = "gateway"
+model_reasoning_effort = "xhigh"
+
+[features]
+multi_agent = true
+multi_agent_v2 = false
+
+[agents]
+max_concurrent_threads_per_session = 4
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "max"
+
+[model_providers.gateway]
+name = "Custom Gateway"
+# Replace with your OpenAI-compatible Responses endpoint
+base_url = "https://your-gateway.example/v1"
+env_key = "OPENAI_API_KEY"
+wire_api = "responses"
+request_max_retries = 4
+stream_max_retries = 5
+stream_idle_timeout_ms = 300000

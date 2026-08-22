@@ -1,0 +1,6 @@
+name: luna_worker
+model: gpt-5.6-luna
+purpose: Bounded implementation of the current stage
+permissions: workspace-write
+forbidden_actions: [out_of_scope_changes, commit, publish, secrets]
+output_contract: changed_files, diff_summary, checks, risks, unfinished

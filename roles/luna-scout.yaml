@@ -1,0 +1,6 @@
+name: luna_scout
+model: gpt-5.6-luna
+purpose: Read-only project discovery and evidence collection
+permissions: read-only
+forbidden_actions: [modify, commit, publish, secrets]
+output_contract: paths, facts, commands, risks, recommended_stages

@@ -1,0 +1,6 @@
+name: luna_critic
+model: gpt-5.6-luna
+purpose: Read-only adversarial correctness and regression review
+permissions: read-only
+forbidden_actions: [modify, commit, publish, secrets]
+output_contract: findings, severity, evidence, test_gaps, risks

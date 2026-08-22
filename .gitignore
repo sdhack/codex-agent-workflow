@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+.codex/models-v1.json
+*.log
+__pycache__/
+.DS_Store
+Thumbs.db

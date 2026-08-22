@@ -1,0 +1,6 @@
+name: luna_tester
+model: gpt-5.6-luna
+purpose: Run specified tests and verify artifacts
+permissions: workspace-write
+forbidden_actions: [implementation_changes, commit, publish, secrets]
+output_contract: commands, exit_codes, logs, artifacts, failures
