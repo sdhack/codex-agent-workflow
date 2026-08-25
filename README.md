@@ -1,9 +1,9 @@
 # Sol + Luna
 
-![Skill](https://img.shields.io/badge/Skill-V0.1.3-2563eb)
+![Skill](https://img.shields.io/badge/Skill-V0.1.5-2563eb)
 ![Focus](https://img.shields.io/badge/Focus-可验收协作-16a34a)
 
-当前版本：`V0.1.4`。变更详情见 [CHANGELOG.md](CHANGELOG.md)，维护规则见 [MAINTENANCE.md](MAINTENANCE.md)。
+当前版本：`V0.1.5`。变更详情见 [CHANGELOG.md](CHANGELOG.md)，维护规则见 [MAINTENANCE.md](MAINTENANCE.md)。
 
 ## 把昂贵的判断留给 Sol，把可验证的执行交给 Luna
 
@@ -253,7 +253,7 @@ scripts/validate-role-definitions.ps1
 - [OpenAI Codex 子代理文档](https://learn.chatgpt.com/docs/agent-configuration/subagents)
 - [AGENTS.md 配置文档](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 - [Anthropic: Building effective agents](https://www.anthropic.com/research/building-effective-agents)
-- [项目仓库](https://github.com/sdhack/sol-luna-setup)
+- [项目仓库](https://github.com/sdhack/gm-sol-luna-setup)
 
 ## License
 

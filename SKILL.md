@@ -13,7 +13,7 @@ description: |
 # Sol + Luna 分层子代理 Setup Skill
 
 > Install: `npx skills add sdhack/sol-luna-setup -g -y`  
-> Repo: https://github.com/sdhack/sol-luna-setup  
+> Repo: https://github.com/sdhack/gm-sol-luna-setup
 > Guide: https://catcat.blog/2026/08/sol-luna-layered-subagents-codex-claude-pi.html
 
 ## 目标
@@ -265,7 +265,7 @@ Luna 回报后，Sol 必须独立检查实际 diff、文件范围、测试命令
 - `references/reporting-contract.md` — Luna 回报字段与状态语义
 - `references/cost-quality-metrics.md` — 上下文、成本、质量和返工指标
 - 博客长文：https://catcat.blog/2026/08/sol-luna-layered-subagents-codex-claude-pi.html
-- 当前仓库：https://github.com/sdhack/sol-luna-setup
+- 当前仓库：https://github.com/sdhack/gm-sol-luna-setup
 
 ## Agent 行为准则
 
