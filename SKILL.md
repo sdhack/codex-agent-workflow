@@ -275,4 +275,12 @@ Luna 回报后，Sol 必须独立检查实际 diff、文件范围、测试命令
 - 用户若要求「只配置 Sol 和 Luna」：不要启用 Terra 作为默认，catalog 里可保留 Terra 条目仅用于兼容。
 - Windows 桌面版使用原生 PowerShell 或明确选择 WSL；不要混用两个环境的项目路径、`CODEX_HOME` 和 `config.toml`。
 - 桌面版安装、账号登录、项目信任和 Codex CLI 安装属于前置环境；本技能只负责项目级配置、角色协议、catalog 修复和验证。
+
+## 版本同步
+
+任何 Agent 更新本技能时，必须同步递增 `agents/openai.yaml` 中 `interface.display_name` 的版本号。展示名格式固定为 `GM 中文用途 V版本号`；不得只更新技能内容而遗漏列表版本。
+
+## 文件编码
+
+技能内的文本文件必须使用 **UTF-8（无 BOM）** 保存。读取、生成或校验中文文件时，必须显式指定 UTF-8；在 Windows 上运行 Python 校验器时使用 `python -X utf8` 或设置 `PYTHONUTF8=1`，不得依赖系统默认 GBK 编码。
 ---
