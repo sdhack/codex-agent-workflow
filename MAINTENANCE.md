@@ -1,6 +1,6 @@
 # 维护说明
 
-当前版本：`V0.1.3`。
+当前版本：`V0.1.4`。
 
 每次更新 `SKILL.md`、角色模板、脚本、参考资料或 UI 元数据时，都必须递增版本、更新 `agents/openai.yaml` 的 `display_name`，并在 `CHANGELOG.md` 记录变更。展示名固定为 `GM 分层多代理配置 V版本号`。
 

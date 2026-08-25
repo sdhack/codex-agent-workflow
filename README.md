@@ -3,6 +3,8 @@
 ![Skill](https://img.shields.io/badge/Skill-V0.1.3-2563eb)
 ![Focus](https://img.shields.io/badge/Focus-可验收协作-16a34a)
 
+当前版本：`V0.1.4`。变更详情见 [CHANGELOG.md](CHANGELOG.md)，维护规则见 [MAINTENANCE.md](MAINTENANCE.md)。
+
 ## 把昂贵的判断留给 Sol，把可验证的执行交给 Luna
 
 Sol + Luna 是一套面向 Codex、Claude Code 和可选 Pi 的分层代理协议与项目脚手架。
