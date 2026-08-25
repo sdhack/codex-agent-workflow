@@ -1,0 +1,7 @@
+interface:
+  display_name: "Sol-Luna 分层代理配置"
+  short_description: "配置 Sol 指挥与 Luna 执行的分层多代理工作流"
+  default_prompt: "使用 $sol-luna-setup 为当前项目配置并验证 Sol-Luna 分层代理。"
+
+policy:
+  allow_implicit_invocation: true
