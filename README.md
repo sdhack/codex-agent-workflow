@@ -258,3 +258,8 @@ scripts/validate-role-definitions.ps1
 ## License
 
 MIT
+
+
+## 免责声明
+
+使用本项目/技能前必须阅读仓库根目录的 [DISCLAIMER.md](DISCLAIMER.md)。使用者自行承担输入、输出、数据处理和发布责任。

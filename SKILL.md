@@ -284,3 +284,8 @@ Luna 回报后，Sol 必须独立检查实际 diff、文件范围、测试命令
 
 技能内的文本文件必须使用 **UTF-8（无 BOM）** 保存。读取、生成或校验中文文件时，必须显式指定 UTF-8；在 Windows 上运行 Python 校验器时使用 `python -X utf8` 或设置 `PYTHONUTF8=1`，不得依赖系统默认 GBK 编码。
 ---
+
+
+## 免责声明
+
+使用本项目/技能前必须阅读仓库根目录的 [DISCLAIMER.md](DISCLAIMER.md)。使用者自行承担输入、输出、数据处理和发布责任。
