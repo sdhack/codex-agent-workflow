@@ -1,0 +1,28 @@
+# Optional custom-provider mode.
+# Copy this file to .codex/config.toml, then export GATEWAY_API_KEY (or change
+# env_key to OPENAI_API_KEY). The value of env_key is a variable name only;
+# never replace it with a secret.
+
+model = "gpt-5.6-sol"
+model_provider = "gateway"
+model_reasoning_effort = "low"
+service_tier = "default"
+
+[features]
+multi_agent = true
+multi_agent_v2 = false
+
+[agents]
+max_concurrent_threads_per_session = 4
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "low"
+
+[model_providers.gateway]
+name = "Custom Gateway"
+# Replace with the HTTPS base URL of an OpenAI-compatible Responses endpoint.
+base_url = "https://your-gateway.example/v1"
+env_key = "GATEWAY_API_KEY"
+wire_api = "responses"
+request_max_retries = 4
+stream_max_retries = 5
+stream_idle_timeout_ms = 300000

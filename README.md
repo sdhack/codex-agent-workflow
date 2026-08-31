@@ -1,9 +1,9 @@
 # Sol + Luna
 
-![Skill](https://img.shields.io/badge/Skill-V0.1.5-2563eb)
+![Skill](https://img.shields.io/badge/Skill-V0.1.7-2563eb)
 ![Focus](https://img.shields.io/badge/Focus-可验收协作-16a34a)
 
-当前版本：`V0.1.5`。变更详情见 [CHANGELOG.md](CHANGELOG.md)，维护规则见 [MAINTENANCE.md](MAINTENANCE.md)。
+当前版本：`V0.1.7`。变更详情见 [CHANGELOG.md](CHANGELOG.md)，维护规则见 [MAINTENANCE.md](MAINTENANCE.md)。
 
 ## 把昂贵的判断留给 Sol，把可验证的执行交给 Luna
 
@@ -61,7 +61,7 @@ Sol 需求理解 · 架构决策 · 风险控制 · 阶段拆解 · 最终验收
 ### 1. 安装技能
 
 ```bash
-npx skills add sdhack/sol-luna-setup -g -y
+npx skills add sdhack/gm-sol-luna-setup -g -y
 ```
 
 ### 2. 初始化当前项目
@@ -85,29 +85,69 @@ scripts/prepare-luna-catalog.sh
 
 已有的无关配置会保留，不会盲目覆盖。
 
-### 3. 设置个人默认配置
+### 3. 选择认证模式
 
-个人配置放在 `~/.codex/config.toml`，不要提交到项目仓库：
+项目模板默认是官方模式：Codex 使用 ChatGPT 账号登录，不配置 `model_provider` 或网关地址。个人配置放在 `~/.codex/config.toml`，不要提交到项目仓库。
+
+#### 官方 Codex / ChatGPT 登录（推荐）
+
+在 Codex Desktop 的设置或登录入口选择 **Sign in with ChatGPT**，按浏览器授权完成登录；在 Codex CLI 中运行 `codex login`，然后选择 **Sign in with ChatGPT**。不要把会话令牌复制到项目文件或环境变量。Windows Desktop、CLI 和项目任务应使用同一账号及可信项目。
+
+官方模式的最小个人配置：
 
 ```toml
 model = "gpt-5.6-sol"
 default_subagent_model = "gpt-5.6-luna"
+model_reasoning_effort = "low"
+service_tier = "default"
+
+[features]
+multi_agent = true
+multi_agent_v2 = false
+```
+
+`service_tier = "default"` 表示标准处理速度和标准计费，不启用 Fast/Priority 等加速层；Sol 与 Luna 默认使用 `model_reasoning_effort = "low"`。
+
+#### 自定义 API Key / Gateway
+
+需要 OpenAI-compatible 网关或 API Key 时，复制项目中的示例：
+
+```bash
+cp .codex/config.custom-gateway.toml.example .codex/config.toml
+```
+
+示例只写环境变量名：
+
+```toml
+model = "gpt-5.6-sol"
+model_provider = "gateway"
+model_reasoning_effort = "low"
+service_tier = "default"
 
 [features]
 multi_agent = true
 multi_agent_v2 = false
 
+[agents]
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "low"
+
 [model_providers.gateway]
-base_url = "https://your-openai-compatible-endpoint/v1"
+name = "Custom Gateway"
+base_url = "https://your-gateway.example/v1"
 wire_api = "responses"
-env_key = "OPENAI_API_KEY"
+env_key = "GATEWAY_API_KEY"
 ```
 
-`env_key` 只写环境变量名。真实密钥只通过环境变量或账号登录注入：
+`base_url` 必须指向支持 `/v1/responses` 的 HTTPS 端点；`env_key` 只能写变量名。真实密钥只通过环境变量注入：
 
 ```bash
-export OPENAI_API_KEY="your-secret"
+export GATEWAY_API_KEY="<your-gateway-key>"
+# 直连 OpenAI API 时可改用 OPENAI_API_KEY，并同步修改 env_key。
+export OPENAI_API_KEY="<your-openai-key>"
 ```
+
+不要把真实值写入 `config.toml`、README、shell 历史、Git diff 或任务消息；若密钥曾进入 Git，立即撤销并重新生成。
 
 ### 4. 生成 Luna catalog
 
@@ -134,7 +174,7 @@ multi_agent_v2 = false
 PowerShell 安装：
 
 ```powershell
-npx skills add sdhack/sol-luna-setup -g -y
+npx skills add sdhack/gm-sol-luna-setup -g -y
 ```
 
 技能目录应位于：

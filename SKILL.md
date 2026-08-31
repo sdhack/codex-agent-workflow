@@ -12,7 +12,7 @@ description: |
 
 # Sol + Luna 分层子代理 Setup Skill
 
-> Install: `npx skills add sdhack/sol-luna-setup -g -y`  
+> Install: `npx skills add sdhack/sol-luna-setup -g -y`
 > Repo: https://github.com/sdhack/gm-sol-luna-setup
 > Guide: https://catcat.blog/2026/08/sol-luna-layered-subagents-codex-claude-pi.html
 
@@ -35,7 +35,7 @@ description: |
 ## 前置
 
 - Linux / macOS，或 Windows + WSL/Git Bash；Node.js 20+
-- 可访问的 OpenAI-compatible **Responses** 端点（`wire_api = "responses"`）
+- 官方模式：已在 Codex Desktop/CLI 以 ChatGPT 账号登录；或自定义模式：可访问的 OpenAI-compatible **Responses** 端点（`wire_api = "responses"`）
 - 账号侧启用 `gpt-5.6-sol` 与 `gpt-5.6-luna`
 
 ## 标准流程（Agent 必须按序执行）
@@ -48,9 +48,10 @@ command -v codex || true
 command -v claude || true
 command -v pi || true
 test -n "${OPENAI_API_KEY:-}" && echo "OPENAI_API_KEY=set" || echo "OPENAI_API_KEY=MISSING"
+test -n "${GATEWAY_API_KEY:-}" && echo "GATEWAY_API_KEY=set" || echo "GATEWAY_API_KEY=MISSING"
 ```
 
-若缺少 Key：停止并要求用户 export，**不要**在对话外落盘明文。
+官方 ChatGPT 登录模式不要求 API Key；自定义模式才需要按 `env_key` 设置对应环境变量。任何模式都不要在对话外落盘明文密钥。
 
 ### 1. 安装 CLI
 
@@ -64,14 +65,17 @@ pi install npm:@kky42/pi-flow   # 可选，需已装 pi
 
 ### 2. 全局个人默认（可选）
 
-写入 `~/.codex/config.toml`（仅个人默认）：
+写入 `~/.codex/config.toml`（仅个人默认，可选）。官方模式不配置 provider：
 
 - `model = "gpt-5.6-sol"`
 - `default_subagent_model = "gpt-5.6-luna"`
+- `model_reasoning_effort = "low"`
+- `service_tier = "default"`（标准速度与标准计费）
 - `[features] multi_agent = true`，`multi_agent_v2 = false`（配合 V1 catalog）
-- `[model_providers.gateway]` + `env_key = "OPENAI_API_KEY"`
 
 **不要**复制用户的真实 Key 进文件。
+
+需要自定义 API Key/Gateway 时，复制 `references/project-template/.codex/config.custom-gateway.toml.example`，保留 `base_url`、`wire_api = "responses"` 和 `env_key`；`env_key` 只写 `GATEWAY_API_KEY` 或 `OPENAI_API_KEY` 变量名。
 
 ### 3. 项目级模板
 

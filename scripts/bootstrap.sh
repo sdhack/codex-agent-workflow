@@ -34,10 +34,11 @@ copy_if_missing() {
 if [[ ! -f "$ROOT/.codex/config.toml" ]]; then
   cp "$TPL/.codex/config.toml" "$ROOT/.codex/config.toml"
   echo "created: $ROOT/.codex/config.toml"
-  echo "NOTE: edit base_url in .codex/config.toml for your gateway"
+  echo "NOTE: official ChatGPT-login mode is ready; for a custom provider, copy .codex/config.custom-gateway.toml.example to .codex/config.toml"
 else
   echo "keep existing: $ROOT/.codex/config.toml"
 fi
+copy_if_missing "$TPL/.codex/config.custom-gateway.toml.example" "$ROOT/.codex/config.custom-gateway.toml.example"
 
 for f in luna_scout.toml luna_worker.toml luna_critic.toml luna_tester.toml; do
   copy_if_missing "$TPL/.codex/agents/$f" "$ROOT/.codex/agents/$f"
@@ -58,7 +59,7 @@ done
 
 echo
 echo "==> Optional: generate Luna-compatible catalog"
-if command -v codex >/dev/null 2>&1 && [[ -n "${OPENAI_API_KEY:-}" || -n "${CODEX_API_KEY:-}" ]]; then
+if command -v codex >/dev/null 2>&1 && [[ -n "${OPENAI_API_KEY:-}" || -n "${GATEWAY_API_KEY:-}" || -n "${CODEX_API_KEY:-}" ]]; then
   if ! bash "$ROOT/scripts/prepare-luna-catalog.sh" "$ROOT/.codex/models-v1.json"; then
     echo "WARNING: catalog generation failed; Luna spawn is not verified" >&2
   fi
@@ -70,7 +71,7 @@ if command -v codex >/dev/null 2>&1 && [[ -n "${OPENAI_API_KEY:-}" || -n "${CODE
     echo "prepended model_catalog_json -> $ABS"
   fi
 else
-  echo "Skip catalog generation (need codex + OPENAI_API_KEY)"
+  echo "Skip catalog generation (requires codex plus OPENAI_API_KEY, GATEWAY_API_KEY, or CODEX_API_KEY); ChatGPT-login users can run it after codex login"
 fi
 
 echo

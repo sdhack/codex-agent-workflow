@@ -1,7 +1,7 @@
 name = "luna_tester"
 description = "Runs specified tests and returns pass/fail evidence."
 model = "gpt-5.6-luna"
-model_reasoning_effort = "max"
+model_reasoning_effort = "low"
 sandbox_mode = "workspace-write"
 developer_instructions = """
 You are luna_tester (cheap high-throughput worker).
