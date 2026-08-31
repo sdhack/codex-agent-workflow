@@ -30,13 +30,21 @@ inventory -> implementation -> verification -> Sol acceptance
 
 Only a stage with a passed gate may unlock its dependents. Record `stage`, `dependencies`, `inputs`, `outputs`, `executor`, `status`, `gate evidence`, and `unlock time`.
 
+Review by `luna_critic` is optional and is not part of the default graph. If Sol schedules it, record its dependency and gate explicitly before unlocking the next stage.
+
 ## Parallelism
 
-Use one Luna by default. Parallel work is allowed only when inputs, outputs, write targets, and validation are independent, with no shared state or order dependency. Cap parallel Luna tasks at three. Never allow two workers to write the same file or generated artifact.
+Use one Luna by default. Parallel work is allowed only when inputs, outputs, write targets, and validation are independent, with no shared state or order dependency. Cap parallel Luna tasks at three. Never allow two workers to write the same file or generated artifact. Every parallel task gets its own task card and acceptance gate.
+
+## Waiting and aggregation
+
+When a dispatched child is executing a command, installation, build, test, or waiting for an external process, Sol continues waiting until the child reaches one of `completed`, `failed`, `timed_out`, or `needs_user_input`. A normal wait with no new output is not `stalled`. Sol may use bounded status waits while the child remains active, but must not declare completion or interrupt it merely because output is quiet.
+
+For a parallel group, Sol may summarize only after every child has reached a terminal state and Sol has independently accepted each result. Any failure, timeout, missing required artifact, or user-input requirement makes the group and dependent stages incomplete and keeps those dependents locked.
 
 ## Failure rule
 
-For a failed stage, send the same Luna a minimal repair card no more than twice. Include the observed failure and one repair objective. After two unsuccessful repairs, Sol takes the smallest fix or replans; it must not silently skip the gate.
+For a failed stage or parallel child, send the same Luna a minimal repair card no more than twice. Include the observed failure and one repair objective. After two unsuccessful repairs, Sol takes the smallest fix or replans; it must not silently skip the gate or unlock dependent stages.
 
 ## Context rule
 

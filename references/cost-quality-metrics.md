@@ -4,9 +4,11 @@ Use metrics to control context and rework without weakening acceptance evidence.
 
 | Metric | Definition | Quality signal |
 |---|---|---|
-| Stage elapsed time | Time from dispatch to report | Detects stalled or oversized stages |
+| Stage elapsed time | Time from dispatch to terminal report, with normal external waits recorded separately | Detects oversized stages without misclassifying a normal wait as stalled |
 | Context volume | Input and output tokens or bounded byte counts | Detects unnecessary history and log repetition |
 | Delegation ratio | Bounded execution stages delegated / eligible execution stages | Shows whether Sol is keeping decision work while using Luna for execution |
+| Parallel task count | Number of concurrent independent Luna tasks in a group | Must be no more than 3 and must have non-overlapping inputs, outputs, writes, and dependencies |
+| Parallel gate completeness | Parallel tasks with their own card and passed gate / parallel tasks dispatched | Must be 100% before Sol aggregates or unlocks dependents |
 | Repair count | Repair dispatches for the stage, maximum 2 | Exposes unclear cards or unstable changes |
 | Verification pass rate | Required checks passed / required checks run | Must be 100% for a passed gate |
 | Defect escape count | Issues found after a gate was marked passed | Must remain 0; any escape triggers review of the gate |
@@ -16,4 +18,6 @@ Use metrics to control context and rework without weakening acceptance evidence.
 ## Minimum acceptance
 
 Never trade away syntax/type checks, required tests, error-log review, scope inspection, or user-visible behavior checks to reduce context. Prefer targeted reads, exact line references, structured summaries, and one focused repair over repeated full-context retries.
+
+An active child remains active while it is executing, installing, building, testing, or waiting for an external process. Terminal states are `completed`, `failed`, `timed_out`, and `needs_user_input`; a quiet but normal wait is not a stalled-stage signal. Any terminal failure, timeout, missing required artifact, or input requirement keeps dependent stages locked.
 
