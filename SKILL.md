@@ -1,5 +1,5 @@
 ---
-name: sol-luna-setup
+name: codex-agent-workflow
 description: |
   在新机器或新项目上落地「高智商领导 + 便宜执行」分层子代理：Codex Sol 领导 + Luna 工人，
   可选 Claude Code 项目级 agents 与 Pi/pi-flow 跨工具编排。用于：
@@ -12,8 +12,8 @@ description: |
 
 # Sol + Luna 分层子代理 Setup Skill
 
-> Install: `npx skills add sdhack/sol-luna-setup -g -y`
-> Repo: https://github.com/sdhack/sol-luna-setup
+> Install: `npx skills add sdhack/codex-agent-workflow -g -y`
+> Repo: https://github.com/sdhack/codex-agent-workflow
 > Guide: https://catcat.blog/2026/08/sol-luna-layered-subagents-codex-claude-pi.html
 
 ## 目标
@@ -68,10 +68,10 @@ pi install npm:@kky42/pi-flow   # 可选，需已装 pi
 写入 `~/.codex/config.toml`（仅个人默认，可选）。官方模式不配置 provider：
 
 - `model = "gpt-5.6-sol"`
-- `default_subagent_model = "gpt-5.6-luna"`
 - `model_reasoning_effort = "low"`
 - `service_tier = "default"`（标准速度与标准计费）
 - `[features] multi_agent = true`，`multi_agent_v2 = false`（配合 V1 catalog）
+- `[agents] default_subagent_model = "gpt-5.6-luna"`，`default_subagent_reasoning_effort = "low"`
 
 **不要**复制用户的真实 Key 进文件。
 
@@ -82,7 +82,7 @@ pi install npm:@kky42/pi-flow   # 可选，需已装 pi
 在项目根运行：
 
 ```bash
-bash ~/.agents/skills/sol-luna-setup/scripts/bootstrap.sh "$(pwd)"
+bash ~/.agents/skills/codex-agent-workflow/scripts/bootstrap.sh "$(pwd)"
 ```
 
 Windows 原生环境请使用 PowerShell 调用已安装技能目录中的脚本；不要把
@@ -272,7 +272,7 @@ Luna 回报后，Sol 必须独立检查实际 diff、文件范围、测试命令
 - `references/reporting-contract.md` — Luna 回报字段与状态语义
 - `references/cost-quality-metrics.md` — 上下文、成本、质量和返工指标
 - 博客长文：https://catcat.blog/2026/08/sol-luna-layered-subagents-codex-claude-pi.html
-- 当前仓库：https://github.com/sdhack/sol-luna-setup
+- 当前仓库：https://github.com/sdhack/codex-agent-workflow
 
 ## Agent 行为准则
 

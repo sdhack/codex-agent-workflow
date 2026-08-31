@@ -61,7 +61,7 @@ Sol 需求理解 · 架构决策 · 风险控制 · 阶段拆解 · 最终验收
 ### 1. 安装技能
 
 ```bash
-npx skills add sdhack/sol-luna-setup -g -y
+npx skills add sdhack/codex-agent-workflow -g -y
 ```
 
 ### 2. 初始化当前项目
@@ -69,7 +69,7 @@ npx skills add sdhack/sol-luna-setup -g -y
 在 Git 仓库根目录执行：
 
 ```bash
-bash ~/.agents/skills/sol-luna-setup/scripts/bootstrap.sh "$(pwd)"
+bash ~/.agents/skills/codex-agent-workflow/scripts/bootstrap.sh "$(pwd)"
 ```
 
 脚手架会创建或更新：
@@ -97,13 +97,16 @@ scripts/prepare-luna-catalog.sh
 
 ```toml
 model = "gpt-5.6-sol"
-default_subagent_model = "gpt-5.6-luna"
 model_reasoning_effort = "low"
 service_tier = "default"
 
 [features]
 multi_agent = true
 multi_agent_v2 = false
+
+[agents]
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "low"
 ```
 
 `service_tier = "default"` 表示标准处理速度和标准计费，不启用 Fast/Priority 等加速层；Sol 与 Luna 默认使用 `model_reasoning_effort = "low"`。
@@ -174,13 +177,13 @@ multi_agent_v2 = false
 PowerShell 安装：
 
 ```powershell
-npx skills add sdhack/sol-luna-setup -g -y
+npx skills add sdhack/codex-agent-workflow -g -y
 ```
 
 技能目录应位于：
 
 ```text
-$env:USERPROFILE\\.agents\\skills\\sol-luna-setup
+$env:USERPROFILE\\.agents\\skills\\codex-agent-workflow
 ```
 
 个人 Codex 配置位于：
@@ -194,8 +197,8 @@ $env:USERPROFILE\\.codex\\config.toml
 验证技能仓库本身（脚本位于全局技能目录；项目初始化不会把它们复制到项目中）：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.agents\\skills\\sol-luna-setup\\scripts\\validate-setup.ps1" -Root "$env:USERPROFILE\\.agents\\skills\\sol-luna-setup"
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.agents\\skills\\sol-luna-setup\\scripts\\validate-role-definitions.ps1" -Root "$env:USERPROFILE\\.agents\\skills\\sol-luna-setup"
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.agents\\skills\\codex-agent-workflow\\scripts\\validate-setup.ps1" -Root "$env:USERPROFILE\\.agents\\skills\\codex-agent-workflow"
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.agents\\skills\\codex-agent-workflow\\scripts\\validate-role-definitions.ps1" -Root "$env:USERPROFILE\\.agents\\skills\\codex-agent-workflow"
 ```
 
 ## 验证标准
@@ -293,7 +296,7 @@ scripts/validate-role-definitions.ps1 角色定义校验（全局技能目录）
 - [OpenAI Codex 子代理文档](https://learn.chatgpt.com/docs/agent-configuration/subagents)
 - [AGENTS.md 配置文档](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 - [Anthropic: Building effective agents](https://www.anthropic.com/research/building-effective-agents)
-- [项目仓库](https://github.com/sdhack/sol-luna-setup)
+- [项目仓库](https://github.com/sdhack/codex-agent-workflow)
 
 ## License
 
