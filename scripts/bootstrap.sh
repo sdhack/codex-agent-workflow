@@ -59,7 +59,7 @@ done
 
 echo
 echo "==> Optional: generate Luna-compatible catalog"
-if command -v codex >/dev/null 2>&1 && [[ -n "${OPENAI_API_KEY:-}" || -n "${GATEWAY_API_KEY:-}" || -n "${CODEX_API_KEY:-}" ]]; then
+if command -v codex >/dev/null 2>&1; then
   if ! bash "$ROOT/scripts/prepare-luna-catalog.sh" "$ROOT/.codex/models-v1.json"; then
     echo "WARNING: catalog generation failed; Luna spawn is not verified" >&2
   fi
@@ -71,7 +71,7 @@ if command -v codex >/dev/null 2>&1 && [[ -n "${OPENAI_API_KEY:-}" || -n "${GATE
     echo "prepended model_catalog_json -> $ABS"
   fi
 else
-  echo "Skip catalog generation (requires codex plus OPENAI_API_KEY, GATEWAY_API_KEY, or CODEX_API_KEY); ChatGPT-login users can run it after codex login"
+  echo "Skip catalog generation (Codex CLI unavailable or not authenticated); run codex login or configure the custom provider, then rerun the script"
 fi
 
 echo

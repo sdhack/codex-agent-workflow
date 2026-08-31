@@ -9,9 +9,9 @@ codex debug models >"$TMP" 2>/dev/null || {
   echo "codex debug models failed; is Codex installed and configured?" >&2
   exit 1
 }
-python3 - "$TMP" "$OUT" <<'PY'
+python3 -X utf8 - "$TMP" "$OUT" <<'PY'
 import json, sys
-raw = open(sys.argv[1]).read()
+raw = open(sys.argv[1], encoding="utf-8").read()
 s, e = raw.find("{"), raw.rfind("}")
 data = json.loads(raw[s:e+1])
 models = data.get("models", data)
@@ -21,7 +21,9 @@ for m in models:
     if m.get("slug") in ("gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"):
         m["multi_agent_version"] = "v1"
     out.append(m)
-open(sys.argv[2], "w").write(json.dumps({"models": out}, ensure_ascii=False))
+with open(sys.argv[2], "w", encoding="utf-8", newline="\n") as f:
+    json.dump({"models": out}, f, ensure_ascii=False, indent=2)
+    f.write("\n")
 print("wrote", sys.argv[2])
 PY
 rm -f "$TMP"

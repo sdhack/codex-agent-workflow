@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'
 $roles = @(Get-ChildItem (Join-Path $Root 'roles') -Filter '*.yaml')
 if ($roles.Count -ne 4) { throw "Expected 4 role definitions, found $($roles.Count)" }
 foreach ($role in $roles) {
-  $content = Get-Content -Raw $role.FullName
+  $content = Get-Content -Raw -Encoding UTF8 $role.FullName
   foreach ($key in @('name:','model:','purpose:','permissions:','output_contract:')) {
     if ($content -notmatch [regex]::Escape($key)) { throw "$($role.Name) missing $key" }
   }
